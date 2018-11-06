@@ -98,16 +98,19 @@ def file_encryption():
             paths_directory = os.path.dirname(path)
             rand_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
             file_extension = os.path.splitext(path)[1]
+
             if command.lower() == "encrypt":
                 with open("%s\encryption_%s%s" % (paths_directory, rand_string, file_extension), "w+") as file_to_write:
                     encrypted_text = aes.encrypt(key, text.encode())
                     file_to_write.write(encrypted_text)
+
                 print("Encryption completed successfully!")
             elif command.lower() == "decrypt":
                 with open("%s\decryption_%s%s" % (paths_directory, rand_string, file_extension), "w+") as file_to_write:
                     decrypted_text = aes.decrypt(key, text)
-                    file_to_write.write(decrypted_text)
-                print("Decryption completed successfully!")
+                    if decrypted_text: 
+                        file_to_write.write(decrypted_text.decode())
+                        print("Decryption completed successfully!")
             else:
                 print("Command wasn't recognised!")
     else:
@@ -118,5 +121,4 @@ def file_encryption():
 
 file_encryption()
 #authentication()
-#text_encryption()
 
