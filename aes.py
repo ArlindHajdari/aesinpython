@@ -15,13 +15,17 @@ def encrypt(key, source, encode=True):
 
 
 def decrypt(key, source, decode=True):
-    if decode:
-        source = base64.b64decode(source.encode("latin-1"))
-    key = SHA256.new(key).digest()
-    iv_1 = source[:AES.block_size]
-    decryptor = AES.new(key, AES.MODE_CBC, iv_1)
-    data = decryptor.decrypt(source[AES.block_size:])
-    padding = ord(data[-1])
-    if data[-padding:] != chr(padding) * padding:
-        raise ValueError("Invalid padding...")
-    return data[:-padding]  # remove the padding
+    try:
+        if decode:
+            source = base64.b64decode(source.encode("latin-1"))
+        key = SHA256.new(key).digest()
+        iv_1 = source[:AES.block_size]
+        decryptor = AES.new(key, AES.MODE_CBC, iv_1)
+        data = decryptor.decrypt(source[AES.block_size:])
+        padding = ord(data[-1])
+        if data[-padding:] != chr(padding) * padding:
+            raise ValueError("Invalid padding...")
+        return data[:-padding] 
+    except:
+        print("Wrong padding")
+
