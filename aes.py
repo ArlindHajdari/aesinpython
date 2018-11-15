@@ -5,7 +5,7 @@ from Crypto import Random
 
 
 def encrypt(key, source, encode=True):
-    key = SHA256.new(key).digest()
+    key = SHA256.new(key).digest() #fixed size
     iv_1 = Random.new().read(AES.block_size)
     encryptor = AES.new(key, AES.MODE_CBC, iv_1)
     padding = AES.block_size - len(source) % AES.block_size
