@@ -22,10 +22,10 @@ def decrypt(key, source, decode=True):
         iv_1 = source[:AES.block_size] #initialize vector
         decryptor = AES.new(key, AES.MODE_CBC, iv_1)
         data = decryptor.decrypt(source[AES.block_size:]) #decrypted data
-        padding = ord(data[-1])
-        if data[-padding:] != chr(padding) * padding:
+        padding = ord(data[-1]) #padding of the data, returns an integer of the representing unicode code for the given unicode caracter
+        if data[-padding:] != chr(padding) * padding: 
             raise ValueError("Invalid padding...")
-        return data[:-padding] 
+        return data[:-padding] #returns data minus the padding
     except:
         print("Wrong padding")
 
