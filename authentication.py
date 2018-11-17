@@ -99,20 +99,20 @@ def file_encryption():
             rand_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
             file_extension = os.path.splitext(path)[1]
 
-            if command.lower() == "encrypt":
+            if command.lower() == "encrypt": #if input is encrypt
 
                 with open("%s\encryption_%s%s" % (paths_directory, rand_string, file_extension), "w+") as file_to_write:
                     encrypted_text = aes.encrypt(key, text.encode())
                     file_to_write.write(encrypted_text)
 
                 print("Encryption completed successfully!")
-            elif command.lower() == "decrypt":
+            elif command.lower() == "decrypt": #else if input is decrypt
                 with open("%s\decryption_%s%s" % (paths_directory, rand_string, file_extension), "w+") as file_to_write:
                     decrypted_text = aes.decrypt(key, text)
                     if decrypted_text:
                         file_to_write.write(decrypted_text.decode())
                         print("Decryption completed successfully!")
-            else:
+            else: #if input is not encrypt or decrypt
                 print("Command wasn't recognised!")
     else:
         print("File doesn't exists!")
