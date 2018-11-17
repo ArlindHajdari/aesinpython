@@ -9,9 +9,9 @@ def encrypt(key, source, encode=True):
     iv_1 = Random.new().read(AES.block_size) #initialize vector
     encryptor = AES.new(key, AES.MODE_CBC, iv_1) #encrypt mode
     padding = AES.block_size - len(source) % AES.block_size #padding of the last block
-    source += chr(padding) * padding
-    data = iv_1 + encryptor.encrypt(source)
-    return base64.b64encode(data).decode("latin-1") if encode else data
+    source += chr(padding) * padding #source content plus padding
+    data = iv_1 + encryptor.encrypt(source) #encryption
+    return base64.b64encode(data).decode("latin-1") if encode else data #return of the encryted text
 
 
 def decrypt(key, source, decode=True):
