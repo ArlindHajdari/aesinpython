@@ -3,6 +3,7 @@ from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto import Random
 
+
 def encrypt(key, source, encode=True):
     key = SHA256.new(key).digest() #fixed size key
     iv_1 = Random.new().read(AES.block_size) #initialize vector
@@ -11,6 +12,7 @@ def encrypt(key, source, encode=True):
     source += chr(padding) * padding #source content plus padding
     data = iv_1 + encryptor.encrypt(source) #encryption
     return base64.b64encode(data).decode("latin-1") if encode else data #return of the encryted text
+
 
 def decrypt(key, source, decode=True):
     try:
